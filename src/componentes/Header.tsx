@@ -82,7 +82,7 @@ export function Header() {
           a marca desliza e os links fazem uma troca rápida (somem, mudam de lugar e reaparecem), sem se cruzarem.
         */}
         <Container
-          className={`relative z-10 flex h-[74px] items-center justify-between transition-[height] ${transicao} rolado:h-[60px] nav:block nav:h-[97px]`}
+          className={`relative z-10 flex h-[74px] items-center justify-between transition-[height] ${transicao} rolado:h-[60px] nav:block nav:h-[96.88px]`}
         >
           <Link
             to="/"
@@ -174,7 +174,7 @@ export function Header() {
       </header>
 
       {/* Reserva o espaço do header fixo; como não muda de altura, o conteúdo não pula ao rolar. */}
-      <div aria-hidden="true" className="h-[75px] nav:h-[98px]" />
+      <div aria-hidden="true" className="h-[75px] nav:h-[97.88px]" />
     </>
   );
 }
