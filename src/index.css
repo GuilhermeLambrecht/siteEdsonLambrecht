@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* Tokens de design (README → "Tokens de design"). Nenhuma cor ou fonte padrão do Tailwind fica disponível. */
+@theme {
+  --color-*: initial;
+  --color-azul: #203f5f;
+  --color-texto: #172c43;
+  --color-texto-claro: #435b74;
+  --color-linha: #d4deea;
+  --color-dourado: #c9a227;
+  --color-dourado-claro: #f3da7c;
+  --color-azul-claro-texto: #e3edf7;
+  --color-borda-header: #6f8ca9;
+  --color-borda-toggle: #a5c9e8;
+  --color-divisoria-menu: #3c5a79;
+  --color-credencial: #bca553;
+  --color-branco: #fff;
+  /* Tons pontuais de estilo.css e dos <style> das páginas. */
+  --color-dourado-escuro: #8d711a;
+  --color-linha-credenciais: #bdcfde;
+  --color-borda-e2: #bbcedf;
+
+  --font-*: initial;
+  --font-serifa: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Archivo", "Segoe UI", system-ui, sans-serif;
+
+  /* max-sm: ≤ 440px · max-md: ≤ 760px · max-lg: ≤ 1000px · md: ≥ 761px · lg: ≥ 1001px */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 441px;
+  --breakpoint-md: 761px;
+  --breakpoint-lg: 1001px;
+  /* Menu completo no header: abaixo disso os links não cabem numa linha e o header usa o botão "Menu". */
+  --breakpoint-nav: 1200px;
+
+  --container-site: 1120px;
+
+  --radius-*: initial;
+  --radius-whatsapp: 28px;
+
+  --shadow-*: initial;
+  --shadow-topo: 0 6px 24px #0b1a2a40;
+  --shadow-card: 0 8px 24px #203f5f1f;
+  --shadow-whatsapp: 0 3px 15px #203f5f26;
+
+  --text-sobretitulo: .74rem;
+  --text-sobretitulo--line-height: 1.65;
+
+  /*
+    Troca de posição dos links do header ao compactar/expandir: somem, mudam de lugar enquanto invisíveis
+    (transição atrasada em .15s no Header) e reaparecem depois que a marca terminou de deslizar.
+    Dois nomes iguais para a animação reiniciar a cada mudança de estado.
+  */
+  --animate-nav-compactar: nav-troca-a .45s ease both;
+  --animate-nav-expandir: nav-troca-b .45s ease both;
+
+  @keyframes nav-troca-a {
+    0% { opacity: 1; }
+    30%, 55% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes nav-troca-b {
+    0% { opacity: 1; }
+    30%, 55% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+}
+
+/* Tamanhos tipográficos usados pela camada base. */
+@theme static {
+  --text-corpo: 17px;
+  --text-corpo--line-height: 1.65;
+  --text-corpo-celular: 16px;
+  --text-h1: clamp(2.6rem, 5.2vw, 4.2rem);
+  --text-h1--letter-spacing: -.025em;
+  --text-h2: clamp(1.8rem, 3vw, 2.7rem);
+  --text-h2--letter-spacing: -.015em;
+  --text-h3: 1.12rem;
+}
+
+/* Estado "rolado" do Header (data-rolado no <header>). O :is() dá ao estado a mesma prioridade de `.topo.rolado`. */
+@custom-variant rolado (&:is([data-rolado="true"] *));
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+    /* Evita que a página se desloque quando o menu aberto trava a rolagem. */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-corpo);
+    line-height: var(--text-corpo--line-height);
+    color: var(--color-texto);
+    background: var(--color-branco);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: .22em;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-serifa);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0 0 .5em;
+  }
+
+  h1 { font-size: var(--text-h1); letter-spacing: var(--text-h1--letter-spacing); }
+  h2 { font-size: var(--text-h2); letter-spacing: var(--text-h2--letter-spacing); }
+  h3 { font-family: var(--font-sans); font-size: var(--text-h3); font-weight: 600; }
+
+  p {
+    margin: 0 0 1.1em;
+    max-width: 68ch;
+  }
+
+  :where(a, button, summary):focus-visible {
+    outline: 3px solid var(--color-azul);
+    outline-offset: 5px;
+  }
+
+  @media (width < theme(--breakpoint-md)) {
+    html { scroll-padding-top: 6rem; }
+    body { font-size: var(--text-corpo-celular); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; }
+  }
+}
